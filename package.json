@@ -19,6 +19,8 @@
   "dependencies": {
     "ejs": "^3.1.6",
     "express": "^4.17.1",
-    "mongoose": "^5.12.7"
+    "marked": "^2.0.3",
+    "mongoose": "^5.12.7",
+    "slugify": "^1.5.2"
   }
 }

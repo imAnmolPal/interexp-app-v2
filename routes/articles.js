@@ -7,14 +7,22 @@ router.get('/new', function(req,res){
   res.render('articles/new', { article: new Article() });
 });
 
-router.get('/:id', async (req,res) =>{
-  const article = await Article.findById(req.params.id);
+router.get('/:slug', async (req,res) =>{
+  const article = await Article.findOne({slug: req.params.slug});
   if(article== null){
     res.redirect('/')
   }
   res.render('articles/show', {article: article})
 });
 
+router.get('/admin/:slug', async (req,res) =>{
+  const article = await Article.findOne({slug: req.params.slug});
+  if(article== null){
+    res.redirect('/')
+  }
+  res.render('articles/showAdmin', {article: article})
+});
+// edit for admin <a href="/articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
 router.post('/', async (req,res)=>{
   let article = new Article({
     title : req.body.title,
@@ -23,7 +31,7 @@ router.post('/', async (req,res)=>{
   })
   try {
     article = await article.save();
-    res.redirect(`/articles/${article.id}`)
+    res.redirect(`/articles/admin/${article.slug}`)
   }catch (e){
       console.log(e);
       res.render('articles/new', {article: article})
